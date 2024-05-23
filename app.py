@@ -8,7 +8,7 @@ last_update_time = 0
 
 @app.route('/')
 def index():
-    return render_template('index.html', circle_color=get_circle_color())
+    return render_template('index.html')
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -16,11 +16,13 @@ def update():
     last_update_time = time.time()
     return jsonify(success=True)
 
-def get_circle_color():
+@app.route('/status', methods=['GET'])
+def status():
+    global last_update_time
     current_time = time.time()
     if current_time - last_update_time < 10:
-        return 'green'
-    return 'red'
+        return jsonify(status='green')
+    return jsonify(status='red')
 
 if __name__ == '__main__':
     app.run(debug=True)
