@@ -3,18 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <title>ESP Status</title>
-    <meta http-equiv="refresh" content="1"> <!-- רענון הדף כל שנייה -->
     <style>
         .circle {
             width: 100px;
             height: 100px;
             border-radius: 50%;
-            background-color: {{ circle_color }};
+            background-color: red;
             margin: 100px auto;
         }
     </style>
 </head>
 <body>
-    <div class="circle"></div>
+    <div class="circle" id="statusCircle"></div>
+
+    <script>
+        function updateCircle() {
+            fetch('/status')
+                .then(response => response.json())
+                .then(data => {
+                    const circle = document.getElementById('statusCircle');
+                    circle.style.backgroundColor = data.status;
+                });
+        }
+
+        // בדיקת הסטטוס כל שנייה
+        setInterval(updateCircle, 1000);
+        
+        // בדיקה ראשונית
+        updateCircle();
+    </script>
 </body>
 </html>
