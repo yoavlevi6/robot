@@ -3,12 +3,12 @@ import time
 
 app = Flask(__name__)
 
-# Store the time of the last update
+# משתנה לאחסון הזמן של העדכון האחרון
 last_update_time = 0
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return render_template('index.html', circle_color=get_circle_color())
 
 @app.route('/update', methods=['POST'])
 def update():
@@ -16,13 +16,11 @@ def update():
     last_update_time = time.time()
     return jsonify(success=True)
 
-@app.route('/status', methods=['GET'])
-def status():
-    global last_update_time
+def get_circle_color():
     current_time = time.time()
     if current_time - last_update_time < 10:
-        return jsonify(status='green')
-    return jsonify(status='red')
+        return 'green'
+    return 'red'
 
 if __name__ == '__main__':
     app.run(debug=True)
