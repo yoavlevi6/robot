@@ -16,21 +16,7 @@
 <body>
     <div class="circle" id="statusCircle"></div>
 
-    <script>
-        function updateCircle() {
-            fetch('/status')
-                .then(response => response.json())
-                .then(data => {
-                    const circle = document.getElementById('statusCircle');
-                    circle.style.backgroundColor = data.status;
-                });
-        }
-
-        // בדיקת הסטטוס כל שנייה
-        setInterval(updateCircle, 1000);
-        
-        // בדיקה ראשונית
-        updateCircle();
-    </script>
+    <!-- כללנו את קובץ ה-JavaScript החיצוני -->
+    <script src="/static/script.js"></script>
 </body>
 </html>
